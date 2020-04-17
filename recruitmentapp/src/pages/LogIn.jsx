@@ -123,8 +123,6 @@ export default class LogIn extends React.Component {
               <form
                 style={{ margin: "0 auto", width: "500px" }}
                 className="text-center border border-light p-5"
-                // action="#!"
-                onSubmit={this.handleLogin}
               >
                 <p className="h1 mb-4">Sign in</p>
 
