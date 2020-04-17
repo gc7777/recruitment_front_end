@@ -12,9 +12,6 @@ export default class LogIn extends React.Component {
     this.state = {
       email: "",
       password: "",
-      token:"",
-      loginMessage : "",
-      role:"",
       errors: {
         blankfield: false,
       },
@@ -80,22 +77,12 @@ export default class LogIn extends React.Component {
     .then(response => response.json())
         // Data retrieved.
         .then(json => {
-            // Store token with session data.
             if(json["status"]==="OK") {
-              sessionStorage.setItem(AUTH_TOKEN, json["token"]);
-              sessionStorage.setItem(USER_ROLE, json["role"]);
-
-              this.token   = json["token"];
-              console.log(this.token);
-
-              this.role   = json["role"];
-
-              this.props.auth.setUserRole(this.role) ;
+  
+              this.props.auth.setUserRole( json["role"]) ;
               this.props.auth.authenticateUser(true);
-              console.log("User Role: "+ this.props.auth.userRole);
+              this.props.auth.setToken(this.token);
 
-              this.setState({loginMessage:"The user has been logged in.",
-              token: json["token"] }); 
               this.props.history.push("./");
             }
             else {
@@ -114,7 +101,6 @@ export default class LogIn extends React.Component {
 
     
     render(){
-      // console.log("Props :" + this.props);
       return (
         <Container>
           <Row>
@@ -152,7 +138,7 @@ export default class LogIn extends React.Component {
                 >
                   Login
                 </button>
-                <h1>{this.state.loginMessage}</h1>
+                {/* <h1>{this.state.loginMessage}</h1> */}
                 {/* <br/>{this.state.token}<br/><br/> */}
                 <p className="control">
                     <a href="/">Forgot password?</a>
