@@ -18,7 +18,44 @@ export default class CompanyProfile extends React.Component {
     }
   }
 
-  updateProfile(){
+
+
+  handleRegister = (event) =>{
+
+    //fetch api
+    const URL =
+      "https://recruitmentsystemapi.azurewebsites.net/api/companies";
+    fetch(URL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: this.state.companyname,
+        City: this.state.city,
+        province: this.state.province,
+        Country: this.state.country,
+        Address: this.state.address,
+        Phone: this.state.phone
+      }),
+    })
+      .then((json) => {
+        this.props.history.push("./");
+      })
+      .catch(function (error) {
+        alert(error);
+      });
+    
+  };
+
+  clearErrors = () => {
+    this.setState({
+      errors: {
+        blankfield: false,
+        matchedpassword: false,
+      },
+    });
 
   }
   render() {
@@ -27,9 +64,11 @@ export default class CompanyProfile extends React.Component {
           <Row>
             <Col className="p-5">
             <FormErrors formerrors={this.state.errors} />
+
               <form
                 style={{ margin: "0 auto", width: "500px" }}
                 className="text-center border border-light p-4"
+                onSubmit = {this.updateCompanyProfile}
               >
                 <p className="h1 mb-4">Company Profile</p>
 
@@ -112,7 +151,7 @@ export default class CompanyProfile extends React.Component {
                 />
 
                 <button
-                  onClick={this.UpdateProfile}
+                  // onClick={this.UpdateProfile}
                   className="btn btn-primary btn-block my-4"
                   type="submit"
                 >
