@@ -20,11 +20,8 @@ export default class CompanyProfile extends React.Component {
   }
 
   updateCompanyProfile = (event) =>{
-      // this.state.token = this.props.auth.JWToken
+     
     const TOKEN = this.props.auth.JWToken
-    this.setState({
-      token : this.props.auth.JWToken
-    })
 
     console.log("Company Profile : " + TOKEN)
     //fetch api
@@ -43,11 +40,13 @@ export default class CompanyProfile extends React.Component {
         province: this.state.province,
         Country: this.state.country,
         Address: this.state.address,
-        Phone: this.state.phone
+        Phone: this.state.phone,
+        isActive: true
       }),
     })
       .then((json) => {
-        this.props.history.push("./");
+        //this.props.history.push("./");
+        console.log("Can not post")
       })
       .catch(function (error) {
         alert(error);
