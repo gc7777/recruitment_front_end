@@ -16,6 +16,7 @@ import LabourerUpcomingJobs from "./pages/LabourerUpcomingJobs";
 import LabourerPastJobs from "./pages/LabourerPastJobs";
 import CompanyProfile from "./pages/CompanyProfile";
 import CompanyJobs from "./pages/CompanyJobs";
+import CompanyJobDetail from "./pages/CompanyJobDetail";
 import Navbar from "./components/Navbar";
 import {
   faTools,
@@ -218,6 +219,12 @@ export default class App extends React.Component {
                         path="/company-jobs"
                         render={props => (
                           <CompanyJobs {...props} auth={authProps} />
+                        )}
+                      />
+                      <Route
+                        path="/company-job-detail"
+                        render={props => (
+                          <CompanyJobDetail {...props} auth={authProps} />
                         )}
                       />
                     </div>
