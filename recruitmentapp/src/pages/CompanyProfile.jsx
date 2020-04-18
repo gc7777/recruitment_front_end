@@ -14,22 +14,28 @@ export default class CompanyProfile extends React.Component {
      Country: "",
      province: "",
      city: "",
-     Address: ""
+     Address: "",
+     token:""
     }
   }
 
+  updateCompanyProfile = (event) =>{
+      // this.state.token = this.props.auth.JWToken
+    const TOKEN = this.props.auth.JWToken
+    this.setState({
+      token : this.props.auth.JWToken
+    })
 
-
-  handleRegister = (event) =>{
-
+    console.log("Company Profile : " + TOKEN)
     //fetch api
     const URL =
       "https://recruitmentsystemapi.azurewebsites.net/api/companies";
     fetch(URL, {
       method: "POST",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${TOKEN}`
       },
       body: JSON.stringify({
         name: this.state.companyname,
