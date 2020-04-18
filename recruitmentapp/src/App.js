@@ -30,7 +30,7 @@ import {
   faUser,
   faClipboardList,
   faTasks,
-  faList
+  faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 library.add(
@@ -53,14 +53,14 @@ export default class App extends React.Component {
     isAuth: false, // true or false
     userRole: "", //admin or labourer or company
     JWToken: "",
-    checkingAuth: true
+    checkingAuth: true,
   };
-  authenticateUser = authenticated => {
+  authenticateUser = (authenticated) => {
     this.setState({ isAuth: authenticated });
     sessionStorage.setItem("isAuth", authenticated);
   };
 
-  setUserRole = userRole => {
+  setUserRole = (userRole) => {
     this.setState({ userRole: userRole });
     sessionStorage.setItem("Role", userRole);
   };
@@ -93,14 +93,14 @@ export default class App extends React.Component {
   }
 
   render() {
-    // this block for all components to understand if the user is authenticated
+    // this block for all components to understand if the user is authenteficated
     const authProps = {
       isAuth: this.state.isAuth,
       userRole: this.state.userRole,
       JWToken: this.state.JWToken,
       authenticateUser: this.authenticateUser,
       setUserRole: this.setUserRole,
-      setToken: this.setToken
+      setToken: this.setToken,
     };
     // end of block of auth
 
