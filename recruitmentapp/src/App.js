@@ -4,7 +4,6 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import LogIn from "./pages/LogIn";
 import Registration from "./pages/Registration";
-import Home from "./pages/Home";
 import RecruiterSkills from "./pages/RecruiterSkills";
 import RecruiterCompanies from "./pages/RecruiterCompanies";
 import RecruiterLabourers from "./pages/RecruiterLabourers";
@@ -50,28 +49,42 @@ library.add(
 
 export default class App extends React.Component {
   state = {
-    isAuth: true, // true or false
-    userRole: "admin", //admin or labourer or company
+    isAuth: false, // true or false
+    userRole: "", //admin or labourer or company
     JWToken: "",
     checkingAuth: true
   };
   authenticateUser = authenticated => {
     this.setState({ isAuth: authenticated });
+    sessionStorage.setItem("isAuth", authenticated);
   };
 
   setUserRole = userRole => {
     this.setState({ userRole: userRole });
+    sessionStorage.setItem("Role", userRole);
   };
 
   setToken = token => {
-    console.log("Token(before) :" + this.state.JWToken)
+    //console.log("Token(before) :" + this.state.JWToken)
     this.setState({ JWToken: token });
-    console.log("Token(after) :" + this.state.JWToken)
+    sessionStorage.setItem("Token", token);
+    //console.log("Token(after) :" + this.state.JWToken)
   };
 
   async componentDidMount() {
     try {
       //CHECK HERE IF USER LOGGED IN AND WHAT IS THE ROLE
+      if (
+        sessionStorage.getItem("Token") != null &&
+        sessionStorage.getItem("Role") != null &&
+        sessionStorage.getItem("isAuth") != null
+      ) {
+        this.setState({
+          JWToken: sessionStorage.getItem("Token"),
+          userRole: sessionStorage.getItem("Role"),
+          isAuth: sessionStorage.getItem("isAuth")
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -99,11 +112,6 @@ export default class App extends React.Component {
               <Route
                 exact
                 path="/"
-                render={props => <Home {...props} auth={authProps} />}
-              />
-              <Route
-                exact
-                path="/login"
                 render={props => <LogIn auth={authProps} />}
               />
               <Route path="/registration" component={Registration} />
