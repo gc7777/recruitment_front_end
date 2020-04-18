@@ -18,15 +18,6 @@ export default class LogIn extends React.Component {
     this.login         = this.login.bind(this);
   }
 
-  // Called when constructor is finished building component.
-  componentDidMount() {  
-    if(sessionStorage.getItem(AUTH_TOKEN)!=null) {
-      this.setState({ 
-        token:sessionStorage.getItem(AUTH_TOKEN)});
-    }
-  }
-
-
   clearErrors = () => {
     this.setState({
       errors: {

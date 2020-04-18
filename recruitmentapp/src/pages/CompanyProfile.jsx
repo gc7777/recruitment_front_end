@@ -14,8 +14,8 @@ export default class CompanyProfile extends React.Component {
      Country: "",
      province: "",
      city: "",
-     Address: "",
-     token:""
+     Address: ""
+
     }
   }
 
@@ -24,7 +24,7 @@ export default class CompanyProfile extends React.Component {
     const TOKEN = this.props.auth.JWToken
 
     console.log("Company Profile : " + TOKEN)
-    //fetch api
+
     const URL =
       "https://recruitmentsystemapi.azurewebsites.net/api/companies";
     fetch(URL, {
@@ -45,8 +45,8 @@ export default class CompanyProfile extends React.Component {
       }),
     })
       .then((json) => {
-        //this.props.history.push("./");
-        console.log("Can not post")
+        this.props.history.push("./");
+        // console.log("Can not post")
       })
       .catch(function (error) {
         alert(error);
@@ -54,15 +54,6 @@ export default class CompanyProfile extends React.Component {
     
   };
 
-  clearErrors = () => {
-    this.setState({
-      errors: {
-        blankfield: false,
-        matchedpassword: false,
-      },
-    });
-
-  }
   render() {
     return (
     <Container>
@@ -156,7 +147,6 @@ export default class CompanyProfile extends React.Component {
                 />
 
                 <button
-                  // onClick={this.UpdateProfile}
                   className="btn btn-primary btn-block my-4"
                   type="submit"
                 >
