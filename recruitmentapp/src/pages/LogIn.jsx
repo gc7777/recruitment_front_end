@@ -74,7 +74,7 @@ export default class LogIn extends React.Component {
               this.props.auth.setToken(json["token"]);
 
 
-            this.props.history.push("./");
+            // this.props.history.push("./");
           } else {
             this.setState({
               loginMessage: "An error occured at login. Try again.",
