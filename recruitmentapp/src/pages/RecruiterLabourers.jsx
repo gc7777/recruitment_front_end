@@ -1,12 +1,15 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { getAllLabourers } from "../api/LabourerApi";
+import { getAllLabourers, getLabourerById } from "../api/LabourerApi";
 import Pagination from "../components/Pagination";
 import { config } from "../api/config.json";
 import UpcomingJobs from "../components/UpcomingJobs";
 import RecruiterLabourerProfile from "../components/RecruiterLabourerProfile";
 import PanelHeader from "../components/PanelHeader";
-import { Row, Col, Card, CardBody, Button } from "reactstrap";
+import { Row, Col, Card, CardBody, InputGroup } from "reactstrap";
+import LabourersSelector from "../components/LabourersSelector";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export default class RecruiterLabourers extends React.Component {
   constructor(props) {
@@ -17,7 +20,8 @@ export default class RecruiterLabourers extends React.Component {
       labourerIdToShowDetails: 0,
       isLoading: true,
       numberOfUpcomingJobs: 1,
-      labourerSelected: {}
+      labourerSelected: {},
+      labourerIdFromSelector: 1
     };
     this.getLabourersList = this.getLabourersList.bind(this);
     this.paginate = this.paginate.bind(this);
@@ -66,6 +70,29 @@ export default class RecruiterLabourers extends React.Component {
           : item
       )
     });
+  };
+
+  handleSearch = async () => {
+    const PROF_ID = this.state.profId;
+    const token = this.props.auth.JWToken;
+
+    await getLabourerById({ token, PROF_ID })
+      .then(res => {
+        if (res.status === 200) {
+          this.setState({
+            companyname: res.data.name,
+            phone: res.data.phone,
+            email: res.data.email,
+            totalCompanies: 1
+            // companies : res.data.result
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    console.log("Company" + this.state.companies);
   };
 
   renderTableData() {
@@ -120,6 +147,26 @@ export default class RecruiterLabourers extends React.Component {
             <Col xs={12} md={6}>
               <Card>
                 <CardBody>
+                  <InputGroup>
+                    <LabourersSelector
+                      auth={this.props.auth}
+                      placeholder="Select labourer"
+                      onChange={labourer =>
+                        this.setState({
+                          labourerIdFromSelector:
+                            labourer && labourer.length > 0
+                              ? labourer[0].id
+                              : null
+                        })
+                      }
+                    />
+                    <button
+                      className="search-icon-button"
+                      onClick={this.handleSearch}
+                    >
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  </InputGroup>
                   <Table responsive>
                     <thead className="text-primary">
                       <tr>
